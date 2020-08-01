@@ -1,23 +1,23 @@
-﻿using Npgsql;
+﻿using Dapper;
 using NEO.Api.Configs;
 using NEO.Api.Models;
-using RepoDb;
-using System;
+using Npgsql;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace NEO.Api.Repository
+namespace NEO.Api.Repositories
 {
     public class BlockRepository : IBlockRepository
     {
-        public BlockRepository()        {
+        public BlockRepository()
+        {
 
         }
         public async Task<IEnumerable<Block>> GetAll()
         {
             using var connection = new NpgsqlConnection(ConnectionsStrings.EvoluaPostgres);
 
-            return await connection.QueryAllAsync<Block>();
+            return await connection.QueryAsync<Block>("SELECT * FROM BLOCKS");
         }
     }
 }

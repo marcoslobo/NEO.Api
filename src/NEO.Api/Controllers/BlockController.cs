@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using NEO.Api.Models;
-using NEO.Api.Repository;
+using NEO.Api.Queries;
+using System.Threading.Tasks;
 
 namespace NEO.Api.Controllers
 {
@@ -21,10 +18,9 @@ namespace NEO.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromServices]IBlockRepository blockRepository)
+        public async Task<IActionResult> Get([FromServices]IMediator mediator)
         {
-            
-            return Ok(await blockRepository.GetAll());
+            return Ok(await mediator.Send(new GetAllBlocksQuery()));
         }
     }
 }

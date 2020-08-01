@@ -1,16 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using NEO.Api.Repository;
-using RepoDb;
+using NEO.Api.Repositories;
+using System;
 
 namespace NEO.Api
 {
@@ -27,7 +22,12 @@ namespace NEO.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            var assembly = AppDomain.CurrentDomain.Load("NEO.Api");
+            services.AddMediatR(assembly);
+
             services.AddScoped(typeof(IBlockRepository), typeof(BlockRepository));
+            services.AddScoped(typeof(IWalletRepository), typeof(WalletRepository));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,9 +37,6 @@ namespace NEO.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            
-            PostgreSqlBootstrap.Initialize();
 
 
             app.UseRouting();
