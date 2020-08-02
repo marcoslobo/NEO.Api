@@ -18,9 +18,9 @@ namespace NEO.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromServices]IMediator mediator)
+        public async Task<IActionResult> Get([FromServices]IMediator mediator, [FromQuery]int pageNumber, [FromQuery]int registersNumber)
         {
-            return Ok(await mediator.Send(new GetAllBlocksQuery()));
+            return Ok(await mediator.Send(new GetAllBlocksQuery(pageNumber, registersNumber)));
         }
     }
 }

@@ -1,11 +1,10 @@
 ﻿using NEO.Api.Models;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace NEO.Api.Repositories
 {
     public interface IBlockRepository
     {
-        Task<IEnumerable<Block>> GetAll();
+        Task<PaginationBaseDto<GetAllBlocksResultDto>> GetAll(int registersNumber, int registersIgnored);
     }
 }
