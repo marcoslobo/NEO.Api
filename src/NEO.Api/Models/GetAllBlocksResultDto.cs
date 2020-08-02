@@ -1,7 +1,7 @@
 ﻿namespace NEO.Api.Models
 {
 
-    public class Block
+    public class GetAllBlocksResultDto 
     {
         public long Index { get; set; }
     }
