@@ -1,9 +1,11 @@
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NEO.Api.Extensions;
 using NEO.Api.Repositories;
 using System;
 
@@ -23,8 +25,8 @@ namespace NEO.Api
         {
             services.AddControllers();
 
-            var assembly = AppDomain.CurrentDomain.Load("NEO.Api");
-            services.AddMediatR(assembly);
+            ConfigureMediatr(services); 
+
 
             services.AddScoped(typeof(IBlockRepository), typeof(BlockRepository));
             services.AddScoped(typeof(IWalletRepository), typeof(WalletRepository));
@@ -38,7 +40,6 @@ namespace NEO.Api
                 app.UseDeveloperExceptionPage();
             }
 
-
             app.UseRouting();
 
             app.UseAuthorization();
@@ -47,6 +48,20 @@ namespace NEO.Api
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private static void ConfigureMediatr(IServiceCollection services)
+        {
+            const string applicationAssemblyName = "NEO.Api";
+            var assembly = AppDomain.CurrentDomain.Load(applicationAssemblyName);
+
+            AssemblyScanner
+                .FindValidatorsInAssembly(assembly)
+                .ForEach(result => services.AddScoped(result.InterfaceType, result.ValidatorType));
+
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(FailFastRequestBehavior<,>));
+
+            services.AddMediatR(assembly);
         }
     }
 }

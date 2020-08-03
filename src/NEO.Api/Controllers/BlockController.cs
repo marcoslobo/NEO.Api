@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NEO.Api.Queries;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace NEO.Api.Controllers
@@ -20,7 +21,13 @@ namespace NEO.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get([FromServices]IMediator mediator, [FromQuery]int pageNumber, [FromQuery]int registersNumber)
         {
-            return Ok(await mediator.Send(new GetAllBlocksQuery(pageNumber, registersNumber)));
+
+            var response = await mediator.Send(new GetAllBlocksQuery(pageNumber, registersNumber));
+
+            if (response.Errors.Any())
+                return BadRequest(response.Errors); 
+
+            return Ok(response.Result);
         }
     }
 }
