@@ -25,6 +25,16 @@ namespace NEO.Api
         {
             services.AddControllers();
 
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Title = "API NEO",
+                    Version = "v1",
+                    Description = "API for NEO Blockchain",
+                });
+            });
+
             ConfigureMediatr(services); 
 
 
@@ -48,6 +58,9 @@ namespace NEO.Api
             {
                 endpoints.MapControllers();
             });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "NEO Services"));
         }
 
         private static void ConfigureMediatr(IServiceCollection services)
