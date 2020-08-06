@@ -27,11 +27,11 @@ namespace NEO.Api
 
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v2", new Microsoft.OpenApi.Models.OpenApiInfo
+                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
-                    Title = "Place Info Service API",
-                    Version = "v2",
-                    Description = "Sample service for Learner",
+                    Title = "API NEO",
+                    Version = "v1",
+                    Description = "API for NEO Blockchain",
                 });
             });
 
@@ -60,7 +60,7 @@ namespace NEO.Api
             });
 
             app.UseSwagger();
-            app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v2/swagger.json", "PlaceInfo Services"));
+            app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "NEO Services"));
         }
 
         private static void ConfigureMediatr(IServiceCollection services)
