@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using NEO.Api.Extensions;
-using NEO.Api.Models;
 
 namespace NEO.Api.Queries
 {
