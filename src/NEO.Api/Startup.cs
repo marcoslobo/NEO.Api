@@ -40,6 +40,7 @@ namespace NEO.Api
 
             services.AddScoped(typeof(IBlockRepository), typeof(BlockRepository));
             services.AddScoped(typeof(IWalletRepository), typeof(WalletRepository));
+            services.AddScoped(typeof(ITransactionRepository), typeof(TransactionRepository)); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
