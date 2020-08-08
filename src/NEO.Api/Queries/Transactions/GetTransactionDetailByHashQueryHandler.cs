@@ -1,12 +1,11 @@
 ﻿using MediatR;
 using NEO.Api.Extensions;
-using NEO.Api.Models;
 using NEO.Api.Repositories;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NEO.Api.Queries.Transactions
+namespace NEO.Api.Queries
 {
     public class GetTransactionDetailByHashQueryHandler : IRequestHandler<GetTransactionDetailByHashQuery, Response>
     {
